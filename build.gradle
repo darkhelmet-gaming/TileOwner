@@ -9,6 +9,7 @@ buildscript {
 plugins {
     id "com.github.johnrengelman.shadow" version "7.0.0"
     id "xyz.jpenilla.run-paper" version "1.0.6"
+    id 'maven-publish'
 }
 
 apply plugin: 'java'
@@ -55,6 +56,22 @@ jar {
 shadowJar {
     relocate 'co.aikar.commands', 'network.darkhelmet.tileowner.acf'
     relocate 'co.aikar.locales', 'network.darkhelmet.tileowner.locales'
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'repsy'
+            url = 'https://repo.repsy.io/mvn/viveleroi/tileowner'
+            credentials(PasswordCredentials)
+        }
+    }
 }
 
 runServer {
