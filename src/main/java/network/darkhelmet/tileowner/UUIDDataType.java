@@ -1,4 +1,4 @@
-package darkhelmet.network.tileowner;
+package network.darkhelmet.tileowner;
 
 import java.nio.ByteBuffer;
 import java.util.UUID;

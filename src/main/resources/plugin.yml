@@ -4,4 +4,4 @@ description:
 authors: [viveleroi]
 website:
 api-version: @apiversion@
-main: darkhelmet.network.tileowner.TileOwner
+main: network.darkhelmet.tileowner.TileOwner

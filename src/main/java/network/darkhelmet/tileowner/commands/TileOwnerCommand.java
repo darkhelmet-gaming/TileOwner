@@ -1,11 +1,11 @@
-package darkhelmet.network.tileowner.commands;
+package network.darkhelmet.tileowner.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.Subcommand;
 
-import darkhelmet.network.tileowner.TileOwner;
+import network.darkhelmet.tileowner.TileOwner;
 
 import java.util.Optional;
 

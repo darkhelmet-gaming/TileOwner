@@ -1,4 +1,4 @@
-package darkhelmet.network.tileowner;
+package network.darkhelmet.tileowner;
 
 import java.util.Optional;
 import java.util.UUID;

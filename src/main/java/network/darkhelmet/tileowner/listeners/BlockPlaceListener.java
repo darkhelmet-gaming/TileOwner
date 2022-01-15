@@ -1,6 +1,6 @@
-package darkhelmet.network.tileowner.listeners;
+package network.darkhelmet.tileowner.listeners;
 
-import darkhelmet.network.tileowner.TileOwner;
+import network.darkhelmet.tileowner.TileOwner;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

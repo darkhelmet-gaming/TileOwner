@@ -1,9 +1,9 @@
-package darkhelmet.network.tileowner;
+package network.darkhelmet.tileowner;
 
 import co.aikar.commands.BukkitCommandManager;
 
-import darkhelmet.network.tileowner.commands.TileOwnerCommand;
-import darkhelmet.network.tileowner.listeners.BlockPlaceListener;
+import network.darkhelmet.tileowner.commands.TileOwnerCommand;
+import network.darkhelmet.tileowner.listeners.BlockPlaceListener;
 
 import java.util.Optional;
 import java.util.UUID;
