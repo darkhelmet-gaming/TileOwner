@@ -1,0 +1,65 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+buildscript {
+    dependencies {
+        classpath group: 'com.github.rodionmoiseev.gradle.plugins', name: 'idea-utils', version: '0.2'
+    }
+}
+
+plugins {
+    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id "xyz.jpenilla.run-paper" version "1.0.6"
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'idea-utils'
+apply plugin: 'checkstyle'
+
+processResources {
+    filter ReplaceTokens, tokens: [
+        "apiversion": project.property("apiversion"),
+        "version"   : project.property("version")
+    ]
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+
+    maven { url = "https://repo.aikar.co/content/groups/aikar/" }
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+}
+
+group = project.property("group")
+version = project.property("version")
+targetCompatibility = sourceCompatibility = JavaVersion.VERSION_17
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.18-R0.1-SNAPSHOT'
+    implementation 'co.aikar:acf-bukkit:0.5.0-SNAPSHOT'
+}
+
+compileJava {
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+    options.forkOptions.executable = 'javac'
+}
+
+jar {
+    actions = []
+    dependsOn = []
+    dependsOn('shadowJar')
+}
+
+shadowJar {
+    relocate 'co.aikar.commands', 'network.darkhelmet.tileowner.acf'
+    relocate 'co.aikar.locales', 'network.darkhelmet.tileowner.locales'
+}
+
+runServer {
+    // Configure the Minecraft version for our task.
+    // This is the only required configuration besides applying the plugin.
+    // Your plugin's jar (or shadowJar if present) will be used automatically.
+    minecraftVersion("1.18.1")
+}

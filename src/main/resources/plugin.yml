@@ -1,0 +1,7 @@
+name: TileOwner
+version: @version@
+description:
+authors: [viveleroi]
+website:
+api-version: @apiversion@
+main: darkhelmet.network.tileowner.TileOwner
