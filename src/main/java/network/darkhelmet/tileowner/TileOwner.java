@@ -2,12 +2,12 @@ package network.darkhelmet.tileowner;
 
 import co.aikar.commands.BukkitCommandManager;
 
-import network.darkhelmet.tileowner.commands.TileOwnerCommand;
-import network.darkhelmet.tileowner.listeners.BlockPlaceListener;
-
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
+
+import network.darkhelmet.tileowner.commands.TileOwnerCommand;
+import network.darkhelmet.tileowner.listeners.BlockPlaceListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;

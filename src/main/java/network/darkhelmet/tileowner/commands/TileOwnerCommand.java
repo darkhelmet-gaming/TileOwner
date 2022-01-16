@@ -5,9 +5,9 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.Subcommand;
 
-import network.darkhelmet.tileowner.TileOwner;
-
 import java.util.Optional;
+
+import network.darkhelmet.tileowner.TileOwner;
 
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
