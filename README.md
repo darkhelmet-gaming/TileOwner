@@ -21,3 +21,17 @@ To get the owner a block, use `TileOwner.getInstance().getOwner(block)`.
 - `check` - Check who owns the blocks you're looking at. (Permission: `tileowner.check`)
 - `set (player)` - Set the owner of the block you're looking at. (Permission: `tileowner.set`)
 - `clear` - Clear the owner of the block you're looking at. (Permission: `tileowner.clear`)
+
+# API
+
+Add the maven repo to your gradle.build:
+
+`maven { url = 'https://repo.repsy.io/mvn/viveleroi/tileowner' }`
+
+Include the API:
+
+`compileOnly 'network.darkhelmet:tileowner:1.0.0-SNAPSHOT'`
+
+In your code, use the `ITileOwner` APIs.
+
+`TileOwner.getInstance.check(block)`
