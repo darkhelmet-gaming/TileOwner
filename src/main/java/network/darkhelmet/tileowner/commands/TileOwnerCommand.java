@@ -3,6 +3,7 @@ package network.darkhelmet.tileowner.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 
 import java.util.Optional;
@@ -22,6 +23,7 @@ public class TileOwnerCommand extends BaseCommand {
      * @param player The player
      */
     @Subcommand("check")
+    @CommandPermission("tileowner.check")
     public void onCheck(Player player) {
         Block target = player.getTargetBlock(null, 5);
 
@@ -40,6 +42,7 @@ public class TileOwnerCommand extends BaseCommand {
      * @param player The player
      */
     @Subcommand("clear")
+    @CommandPermission("tileowner.clear")
     public void onClear(Player player) {
         Block target = player.getTargetBlock(null, 5);
 
@@ -59,6 +62,7 @@ public class TileOwnerCommand extends BaseCommand {
      */
     @Subcommand("set")
     @CommandCompletion("@players")
+    @CommandPermission("tileowner.set")
     public void onSet(Player player) {
         onSet(player, player);
     }
@@ -71,6 +75,7 @@ public class TileOwnerCommand extends BaseCommand {
      */
     @Subcommand("set")
     @CommandCompletion("@players")
+    @CommandPermission("tileowner.set")
     public void onSet(Player player, OfflinePlayer owner) {
         Block target = player.getTargetBlock(null, 5);
 
@@ -79,7 +84,7 @@ public class TileOwnerCommand extends BaseCommand {
         } else {
             TileOwner.getInstance().setOwner(target, owner.getUniqueId());
 
-            player.sendMessage(ChatColor.GREEN + "Registered you as the owner of that block.");
+            player.sendMessage(ChatColor.GREEN + "Registered " + owner.getName() + " as the owner of that block.");
         }
     }
 }

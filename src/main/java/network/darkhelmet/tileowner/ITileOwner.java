@@ -31,6 +31,14 @@ public interface ITileOwner {
     boolean hasOwner(Block block);
 
     /**
+     * Checks if a block is valid (is whitelisted).
+     *
+     * @param block The block
+     * @return True if block is valid
+     */
+    boolean isValidBlock(Block block);
+
+    /**
      * Set the owner of a block. Will override any existing value.
      *
      * @param block The block

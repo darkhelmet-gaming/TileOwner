@@ -79,6 +79,10 @@ public class TileOwner extends JavaPlugin implements ITileOwner {
 
     @Override
     public void clearOwner(Block block) {
+        if (!isValidBlock(block)) {
+            return;
+        }
+
         if (block.getState() instanceof TileState tileState) {
             PersistentDataContainer container = tileState.getPersistentDataContainer();
 
@@ -88,17 +92,6 @@ public class TileOwner extends JavaPlugin implements ITileOwner {
                 tileState.update();
             }
         }
-    }
-
-    @Override
-    public boolean hasOwner(Block block) {
-        if (block.getState() instanceof TileState tileState) {
-            PersistentDataContainer container = tileState.getPersistentDataContainer();
-
-            return container.has(tileOwnerKey, uuidDataType);
-        }
-
-        return false;
     }
 
     @Override
@@ -117,7 +110,30 @@ public class TileOwner extends JavaPlugin implements ITileOwner {
     }
 
     @Override
+    public boolean hasOwner(Block block) {
+        if (block.getState() instanceof TileState tileState) {
+            PersistentDataContainer container = tileState.getPersistentDataContainer();
+
+            return container.has(tileOwnerKey, uuidDataType);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean isValidBlock(Block block) {
+        return switch (block.getType()) {
+            case BLAST_FURNACE, BREWING_STAND, FURNACE, SMOKER -> true;
+            default -> false;
+        };
+    }
+
+    @Override
     public void setOwner(Block block, UUID playerUUID) {
+        if (!isValidBlock(block)) {
+            return;
+        }
+
         if (block.getState() instanceof TileState tileState) {
             PersistentDataContainer container = tileState.getPersistentDataContainer();
             container.set(tileOwnerKey, uuidDataType, playerUUID);
