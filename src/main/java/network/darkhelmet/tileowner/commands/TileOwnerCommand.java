@@ -30,7 +30,10 @@ public class TileOwnerCommand extends BaseCommand {
         Optional<OfflinePlayer> owner = TileOwner.getInstance().getOwner(target);
 
         if (owner.isPresent()) {
-            player.sendMessage(String.format("Block is owned by %s", owner.get().getName()));
+            String msg = owner.get().equals(player) ? "You own that block" :
+                String.format("Block is owned by %s", owner.get().getName());
+
+            player.sendMessage(msg);
         } else {
             player.sendMessage("No one owns that block.");
         }
@@ -42,16 +45,30 @@ public class TileOwnerCommand extends BaseCommand {
      * @param player The player
      */
     @Subcommand("clear")
-    @CommandPermission("tileowner.clear")
     public void onClear(Player player) {
         Block target = player.getTargetBlock(null, 5);
 
-        if (!TileOwner.getInstance().hasOwner(target)) {
+        Optional<OfflinePlayer> optionalOwner = TileOwner.getInstance().getOwner(target);
+        if (optionalOwner.isEmpty()) {
             player.sendMessage(ChatColor.RED + "No one owns this block.");
-        } else {
+
+            return;
+        }
+
+        // Clear any
+        if (player.hasPermission("tileowner.clear")) {
             TileOwner.getInstance().clearOwner(target);
 
             player.sendMessage(ChatColor.GREEN + "Cleared the owner of that block.");
+
+            return;
+        }
+
+        // Clear self
+        if (optionalOwner.get().equals(player) && player.hasPermission("tileowner.clear.self")) {
+            TileOwner.getInstance().clearOwner(target);
+
+            player.sendMessage(ChatColor.GREEN + "You no longer own that block.");
         }
     }
 
@@ -61,10 +78,18 @@ public class TileOwnerCommand extends BaseCommand {
      * @param player The player
      */
     @Subcommand("set")
-    @CommandCompletion("@players")
-    @CommandPermission("tileowner.set")
+    @CommandPermission("tileowner.set.self")
     public void onSet(Player player) {
-        onSet(player, player);
+        Block target = player.getTargetBlock(null, 5);
+
+        Optional<OfflinePlayer> optionalOwner = TileOwner.getInstance().getOwner(target);
+        if (optionalOwner.isPresent() && !optionalOwner.get().equals(player)) {
+            player.sendMessage(ChatColor.RED + "Someone else already owns that block.");
+
+            return;
+        }
+
+        TileOwner.getInstance().setOwner(target, player.getUniqueId());
     }
 
     /**
@@ -75,16 +100,23 @@ public class TileOwnerCommand extends BaseCommand {
      */
     @Subcommand("set")
     @CommandCompletion("@players")
-    @CommandPermission("tileowner.set")
-    public void onSet(Player player, OfflinePlayer owner) {
+    public void onSet(Player player, @co.aikar.commands.annotation.Optional Player owner) {
+        owner = owner == null ? player : owner;
+
         Block target = player.getTargetBlock(null, 5);
 
-        if (TileOwner.getInstance().hasOwner(target)) {
-            player.sendMessage(ChatColor.RED + "Someone already owns that block.");
-        } else {
-            TileOwner.getInstance().setOwner(target, owner.getUniqueId());
+        Optional<OfflinePlayer> optionalOwner = TileOwner.getInstance().getOwner(target);
+        if (optionalOwner.isPresent()) {
+            String msg = optionalOwner.get().equals(owner) ? "You already own that block."
+                : "Someone already owns that block.";
 
-            player.sendMessage(ChatColor.GREEN + "Registered " + owner.getName() + " as the owner of that block.");
+            player.sendMessage(ChatColor.RED + msg);
+
+            return;
         }
+
+        TileOwner.getInstance().setOwner(target, owner.getUniqueId());
+
+        player.sendMessage(ChatColor.GREEN + "Registered " + owner.getName() + " as the owner of that block.");
     }
 }

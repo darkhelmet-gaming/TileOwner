@@ -19,8 +19,8 @@ To get the owner a block, use `TileOwner.getInstance().getOwner(block)`.
 # Commands
 
 - `check` - Check who owns the blocks you're looking at. (Permission: `tileowner.check`)
-- `set (player)` - Set the owner of the block you're looking at. (Permission: `tileowner.set`)
-- `clear` - Clear the owner of the block you're looking at. (Permission: `tileowner.clear`)
+- `set (player)` - Set the owner of the block you're looking at. (Permission: `tileowner.set` or `tileowner.set.self`)
+- `clear` - Clear the owner of the block you're looking at. (Permission: `tileowner.clear` or `tileowner.clear.self`)
 
 # API
 
